@@ -14,7 +14,7 @@ import { useUserStore } from "./stores/useUserStore"
 
 
 function App() {
-  const { user, checkAuth, checkingAuth } = useUserStore();
+	const { user, checkAuth, checkingAuth } = useUserStore();
 	const { getCartItems } = useCartStore();
 	useEffect(() => {
 		checkAuth();

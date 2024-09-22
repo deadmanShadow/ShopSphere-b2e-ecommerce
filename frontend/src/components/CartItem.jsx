@@ -1,14 +1,43 @@
+import { motion } from "framer-motion";
 import { Minus, Plus, Trash } from "lucide-react";
+import Swal from "sweetalert2";
 import { useCartStore } from "../stores/useCartStore";
 
 const CartItem = ({ item }) => {
 	const { removeFromCart, updateQuantity } = useCartStore();
 
+	const handleRemove = () => {
+		Swal.fire({
+			title: 'Are you sure?',
+			text: 'This will remove the item from your cart!',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, remove it!',
+			cancelButtonText: 'No, keep it',
+			willClose: () => {
+				// Optional: Add exit animation here if needed
+			}
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Optional: You can animate the item before removing
+				// (for example, using motion)
+				removeFromCart(item._id);
+				Swal.fire('Removed!', 'The item has been removed from your cart.', 'success');
+			}
+		});
+	};
+
 	return (
-		<div className='rounded-lg border p-4 shadow-sm border-gray-700 bg-gray-800 md:p-6'>
+		<motion.div 
+			className='rounded-lg border p-4 shadow-sm border-gray-700 bg-gray-800 md:p-6'
+			whileHover={{ scale: 1.05 }}
+			transition={{ type: 'spring', stiffness: 300 }}
+		>
 			<div className='space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0'>
 				<div className='shrink-0 md:order-1'>
-					<img className='h-20 md:h-32 rounded object-cover' src={item.image} />
+					<img className='h-20 md:h-32 rounded object-cover' src={item.image} alt={item.name} />
 				</div>
 				<label className='sr-only'>Choose quantity:</label>
 
@@ -48,14 +77,15 @@ const CartItem = ({ item }) => {
 						<button
 							className='inline-flex items-center text-sm font-medium text-red-400
 							 hover:text-red-300 hover:underline'
-							onClick={() => removeFromCart(item._id)}
+							onClick={handleRemove}
 						>
 							<Trash />
 						</button>
 					</div>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	);
 };
+
 export default CartItem;

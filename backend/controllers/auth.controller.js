@@ -3,7 +3,7 @@ import { redis } from "../lib/redis.js";
 import User from "../models/user.model.js";
 const generateTokens = (userId) => {
 	const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
-		expiresIn: "15m",
+		expiresIn: "45m",
 	});
 
 	const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
@@ -116,7 +116,7 @@ export const refreshToken = async (req, res) => {
 			return res.status(401).json({ message: "Invalid refresh token" });
 		}
 
-		const accessToken = jwt.sign({ userId: decoded.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+		const accessToken = jwt.sign({ userId: decoded.userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "45m" });
 
 		res.cookie("accessToken", accessToken, {
 			httpOnly: true,
