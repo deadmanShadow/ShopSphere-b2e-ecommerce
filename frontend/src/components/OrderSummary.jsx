@@ -4,9 +4,8 @@ import { MoveRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "../lib/axios";
 import { useCartStore } from "../stores/useCartStore";
-
 const stripePromise = loadStripe(
-	"pk_test_51KZYccCoOZF2UhtOwdXQl3vcizup20zqKqT9hVUIsVzsdBrhqbUI2fE0ZdEVLdZfeHjeyFXtqaNsyCJCmZWnjNZa00PzMAjlcL"
+	import.meta.env.VITE_STRIPE_PUBLISH_KEY
 );
 
 const OrderSummary = () => {
