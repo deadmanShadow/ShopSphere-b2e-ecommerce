@@ -1,21 +1,33 @@
 import { ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 import { useCartStore } from "../stores/useCartStore";
 import { useUserStore } from "../stores/useUserStore";
 
 const ProductCard = ({ product }) => {
 	const { user } = useUserStore();
 	const { addToCart } = useCartStore();
+
 	const handleAddToCart = () => {
 		if (!user) {
 			toast.error("Please login to add products to cart", { id: "login" });
 			return;
 		} else {
-
 			addToCart(product);
+			Swal.fire({
+				title: 'Added to Cart!',
+				text: `${product.name} has been added to your cart.`,
+				icon: 'success',
+				showConfirmButton: false,
+				timer: 2000,
+				toast: true,
+				position: 'top-end',
+				background: '#333',
+				color: '#fff',
+				iconColor: '#10b981',
+			});
 		}
 	};
-
 	return (
 		<div className='flex w-full relative flex-col overflow-hidden rounded-lg border border-gray-700 shadow-lg'>
 			<div className='relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl'>
@@ -42,4 +54,5 @@ const ProductCard = ({ product }) => {
 		</div>
 	);
 };
+
 export default ProductCard;

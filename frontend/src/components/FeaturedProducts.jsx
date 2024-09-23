@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import { useCartStore } from "../stores/useCartStore";
 
 const FeaturedProducts = ({ featuredProducts }) => {
@@ -24,7 +25,6 @@ const FeaturedProducts = ({ featuredProducts }) => {
 	const nextSlide = () => {
 		setCurrentIndex((prevIndex) => prevIndex + itemsPerPage);
 	};
-
 	const prevSlide = () => {
 		setCurrentIndex((prevIndex) => prevIndex - itemsPerPage);
 	};
@@ -32,6 +32,21 @@ const FeaturedProducts = ({ featuredProducts }) => {
 	const isStartDisabled = currentIndex === 0;
 	const isEndDisabled = currentIndex >= featuredProducts.length - itemsPerPage;
 
+	const handleAddToCart = (product) => {
+		addToCart(product);
+		Swal.fire({
+			title: 'Added to Cart!',
+			text: `${product.name} has been added to your cart.`,
+			icon: 'success',
+			showConfirmButton: false,
+			timer: 2000,
+			toast: true,
+			position: 'top-end',
+			background: '#333',
+			color: '#fff',
+			iconColor: '#10b981',
+		});
+	};
 	return (
 		<div className='py-12'>
 			<div className='container mx-auto px-4'>
@@ -58,7 +73,7 @@ const FeaturedProducts = ({ featuredProducts }) => {
 												${product.price.toFixed(2)}
 											</p>
 											<button
-												onClick={() => addToCart(product)}
+												onClick={() => handleAddToCart(product)} 
 												className='w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 
 												flex items-center justify-center'
 											>
@@ -95,4 +110,5 @@ const FeaturedProducts = ({ featuredProducts }) => {
 		</div>
 	);
 };
+
 export default FeaturedProducts;
