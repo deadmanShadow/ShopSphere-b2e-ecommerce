@@ -5,12 +5,15 @@ export const useUserStore = create((set, get) => ({
 	user: null,
 	loading: false,
 	checkingAuth: true,
+
 	signup: async ({ name, email, password, confirmPassword }) => {
 		set({ loading: true });
+
 		if (password !== confirmPassword) {
 			set({ loading: false });
 			return toast.error("Passwords do not match");
 		}
+
 		try {
 			const res = await axios.post("/auth/signup", { name, email, password });
 			set({ user: res.data, loading: false });
@@ -21,6 +24,7 @@ export const useUserStore = create((set, get) => ({
 	},
 	login: async (email, password) => {
 		set({ loading: true });
+
 		try {
 			const res = await axios.post("/auth/login", { email, password });
 
@@ -30,6 +34,7 @@ export const useUserStore = create((set, get) => ({
 			toast.error(error.response.data.message || "An error occurred");
 		}
 	},
+
 	logout: async () => {
 		try {
 			await axios.post("/auth/logout");
@@ -49,7 +54,9 @@ export const useUserStore = create((set, get) => ({
 			set({ checkingAuth: false, user: null });
 		}
 	},
+
 	refreshToken: async () => {
+		// Prevent multiple simultaneous refresh attempts
 		if (get().checkingAuth) return;
 
 		set({ checkingAuth: true });
@@ -63,7 +70,9 @@ export const useUserStore = create((set, get) => ({
 		}
 	},
 }));
+
 let refreshPromise = null;
+
 axios.interceptors.response.use(
 	(response) => response,
 	async (error) => {
@@ -72,16 +81,20 @@ axios.interceptors.response.use(
 			originalRequest._retry = true;
 
 			try {
+				// If a refresh is already in progress, wait for it to complete
 				if (refreshPromise) {
 					await refreshPromise;
 					return axios(originalRequest);
 				}
+
+				// Start a new refresh process
 				refreshPromise = useUserStore.getState().refreshToken();
 				await refreshPromise;
 				refreshPromise = null;
 
 				return axios(originalRequest);
 			} catch (refreshError) {
+				// If refresh fails, redirect to login or handle as needed
 				useUserStore.getState().logout();
 				return Promise.reject(refreshError);
 			}

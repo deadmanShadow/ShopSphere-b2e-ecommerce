@@ -1,6 +1,7 @@
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import axios from "../lib/axios";
+
 export const useCartStore = create((set, get) => ({
 	cart: [],
 	coupon: null,

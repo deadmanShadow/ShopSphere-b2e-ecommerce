@@ -8,6 +8,8 @@ import CartPage from "./pages/CartPage"
 import CategoryPage from "./pages/CategoryPage"
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"
+import PurchaseCancelPage from "./pages/PurchaseCancelPage"
+import PurchaseSuccessPage from "./pages/PurchaseSuccessPage"
 import SignUpPage from "./pages/SignUpPage"
 import { useCartStore } from "./stores/useCartStore"
 import { useUserStore } from "./stores/useUserStore"
@@ -33,23 +35,24 @@ function App() {
       <div
         className='absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.3)_0%,rgba(10,80,60,0.2)_45%,rgba(0,0,0,0.1)_100%)] pointer-events-none z-0'
       ></div>
-      <div className=" relative z-50 pt-20">
-      <Navbar/>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
+     <div className='relative z-50 pt-20'>
+				<Navbar />
+				<Routes>
+					<Route path='/' element={<HomePage />} />
+					<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
 					<Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
-          <Route
+					<Route
 						path='/secret-dashboard'
 						element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/login' />}
 					/>
-          <Route path='/category/:category' element={<CategoryPage />} />
-          <Route path='/cart' element={user ? <CartPage /> : <Navigate to='/login' />} />
-      </Routes>
-      </div>
-      <Toaster/>
-    </div>
-  )
+					<Route path='/category/:category' element={<CategoryPage />} />
+					<Route path='/cart' element={user ? <CartPage /> : <Navigate to='/login' />} />
+					<Route path='/purchase-success' element={<PurchaseSuccessPage />} />
+          <Route path='/purchase-cancel' element={<PurchaseCancelPage />} />
+				</Routes>
+			</div>
+			<Toaster />
+		</div>
+	);
 }
-
 export default App

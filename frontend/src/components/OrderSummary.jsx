@@ -1,9 +1,11 @@
+
 import { loadStripe } from "@stripe/stripe-js";
 import { motion } from "framer-motion";
 import { MoveRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "../lib/axios";
 import { useCartStore } from "../stores/useCartStore";
+
 const stripePromise = loadStripe(
 	import.meta.env.VITE_STRIPE_PUBLISH_KEY
 );
