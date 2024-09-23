@@ -4,6 +4,8 @@ ShopSphere is a **Full-Stack E-commerce B2E (Business-to-Employee)** application
 
 ### For Users 👤
 
+---
+
 - **User Authentication:** Secure sign-up and login functionalities.
 - **Product Listings:** Browse a wide range of products with detailed descriptions and images.
 - **Shopping Cart:** Add, remove, and update product quantities in the cart.
@@ -12,6 +14,8 @@ ShopSphere is a **Full-Stack E-commerce B2E (Business-to-Employee)** application
 - **Order Confirmation:** Receive order confirmations with details and estimated delivery times.
 
 ### For Admins 🧑‍💼
+
+---
 
 - **Admin Authentication:** Secure access to the admin dashboard.
 - **Product Management:** Create, update, and delete products.
@@ -39,6 +43,7 @@ ShopSphere is a **Full-Stack E-commerce B2E (Business-to-Employee)** application
 - **Express**
 - **Mongoose**
 - **MongoDB**
+- **Redis**
 - **Stripe**
 - **JWT**
 - **Bcrypt.js**
